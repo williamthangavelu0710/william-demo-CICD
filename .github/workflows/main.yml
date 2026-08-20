@@ -15,8 +15,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Say hello
-        run: echo "Hello from GitHub Actions"
+      - name: Explore the runner
+        run: |
+          echo "Hello from GitHub Actions"
+        echo "Current directory:"
+        pwd
+        echo "Files in repository:"
+        ls -la
+        echo "Node Version:"
+        node --version
 
       - name: Show Node version
         run: node --version
