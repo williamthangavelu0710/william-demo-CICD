@@ -118,6 +118,23 @@ jobs:
       - name: Run integration tests
         run: npm run test:integration
         
+  docker-build:
+    needs: integration-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: dist
+
+      - name: Build Docker image
+        run: docker build -t npm-ci-demo .  
+        
   verify-artifact:
     needs: build
     runs-on: ubuntu-latest
