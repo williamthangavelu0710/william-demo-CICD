@@ -3,7 +3,7 @@ name: Node CI
 env:
   NODE_VERSION: 24
   APP_NAME: npm-ci-demo
-  DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+  #DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
   
 on:
   push:
@@ -22,7 +22,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check secret       
+      - name: Check secret
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
         run: |
           echo "The secret was loaded."
           echo "Secret length: ${#DEMO_SECRET}"
