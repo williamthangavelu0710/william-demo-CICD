@@ -77,7 +77,7 @@ jobs:
           name: app-build
           path: dist/
 
-verify-artifact:
+  verify-artifact:
     needs: build
     runs-on: ubuntu-latest
 
