@@ -7,23 +7,22 @@ on:
 
 jobs:
 
-  build:
+  lint:
     runs-on: ubuntu-latest
-
     steps:
+      - name: Run lint
+        run: echo "Linting code"
 
-      - name: Checkout code
-        uses: actions/checkout@v4
+  unit-test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run unit tests
+        run: echo "Running unit tests"
 
-      - name: Explore the runner
-        run: |
-          echo "Hello from GitHub Actions"
-          echo "Current directory:"
-          pwd
-          echo "Files in repository:"
-          ls -la
-          echo "Node Version:"
-          node --version
-
-      - name: Show Node version
-        run: node --version
+  build:
+    needs: unit-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build application
+        run: echo "Building application"
