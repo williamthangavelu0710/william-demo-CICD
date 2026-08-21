@@ -3,8 +3,14 @@ name: Node CI
 env:
   NODE_VERSION: 24
   APP_NAME: npm-ci-demo
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
   #DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
-  
+
+permissions:
+    contents: read
+    packages: write
+    
 on:
   push:
     branches:
@@ -120,6 +126,7 @@ jobs:
         
   docker-build:
     needs: integration-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -132,9 +139,23 @@ jobs:
           name: app-build
           path: dist
 
-      - name: Build Docker image
-        run: docker build -t npm-ci-demo .  
-        
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          contect: .
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        #run: docker build -t npm-ci-demo .  
+
+
+          
   verify-artifact:
     needs: integration-test
     runs-on: ubuntu-latest
