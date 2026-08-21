@@ -76,3 +76,19 @@ jobs:
         with:
           name: app-build
           path: dist/
+
+verify-artifact:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: downloaded-build
+
+      - name: Show downloaded files
+        run: |
+          echo "Downloaded artifact contents:"
+          ls -la downloaded-build
