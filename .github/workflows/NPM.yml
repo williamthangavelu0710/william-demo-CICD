@@ -136,7 +136,7 @@ jobs:
         run: docker build -t npm-ci-demo .  
         
   verify-artifact:
-    needs: build
+    needs: integration-test
     runs-on: ubuntu-latest
 
     steps:
