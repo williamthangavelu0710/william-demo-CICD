@@ -3,6 +3,8 @@ name: Node CI
 env:
   NODE_VERSION: 24
   APP_NAME: npm-ci-demo
+  DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+  
 on:
   push:
     branches:
@@ -20,6 +22,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Check secret       
+        run: |
+          echo "The secret was loaded."
+          echo "Secret length: ${#DEMO_SECRET}"
+          
+      - name: Use secret
+        run: echo "Secret exists"
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+          
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
