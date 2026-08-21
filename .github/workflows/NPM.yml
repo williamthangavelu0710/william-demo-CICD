@@ -28,7 +28,7 @@ jobs:
       - name: Show environment variables
         run: |
           echo "App name: $APP_NAME"
-          echo "Default Node version: $NODE_VERSION"          
+          echo "Default Node version: $NODE-VERSION"          
 
       - name: Install dependencies
         run: npm ci
