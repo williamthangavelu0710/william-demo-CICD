@@ -76,10 +76,31 @@ jobs:
 
       - name: Run tests
         run: npm test
+        
+  dependency-scan:
+    needs: unit-test
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Scan dependencies
+        run: npm audit --audit-level=high
 
   build:
-    needs: unit-test
+    needs: 
+      - unit-test
+      - dependency-scan
     runs-on: ubuntu-latest
 
     steps:
