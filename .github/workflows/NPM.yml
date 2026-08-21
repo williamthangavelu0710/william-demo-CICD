@@ -97,7 +97,27 @@ jobs:
         with:
           name: app-build
           path: dist/
+          
+  integration-test:
+    needs: build
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run integration tests
+        run: npm run test:integration
+        
   verify-artifact:
     needs: build
     runs-on: ubuntu-latest
