@@ -9,3 +9,6 @@ module.exports = {
   add,
   greet
 };
+
+// CODEOWNERS test
+
