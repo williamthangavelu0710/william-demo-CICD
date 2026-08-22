@@ -5,6 +5,10 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: williamthangavelu0710/william-demo-cicd
 
+permissions:
+    contents: read
+    packages: write
+    
 on:
     push:
       branches:
