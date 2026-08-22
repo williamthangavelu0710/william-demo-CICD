@@ -1,0 +1,3 @@
+/src/       → you own application source code
+/.github/   → you own GitHub workflow/config files
+Dockerfile  → you own Docker changes
